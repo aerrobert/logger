@@ -2,6 +2,8 @@
 
 When you just want simple logs that look nice
 
+[See the full documentation](https://eric-aerrober.github.io/flame-logs/#/) for more information
+
 ## Features
 
 Support for the following:
