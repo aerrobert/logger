@@ -10,11 +10,11 @@ export enum LogPart {
     Waiting = 'WAITING',
 }
 
-export type ColorPallet = Record<LogPart, string>
+export type ColorPallet = Record<LogPart, string>;
 
 export interface LogSection {
-    part: LogPart,
-    message: string,
+    part: LogPart;
+    message: string;
 }
 
 export enum JobStatus {
@@ -23,9 +23,9 @@ export enum JobStatus {
 }
 
 export interface ActiveJob {
-    id: string,
-    start: Date,
-    status: JobStatus
-    delayTime?: number,
-    title: string,
+    id: string;
+    start: Date;
+    status: JobStatus;
+    delayTime?: number;
+    title: string;
 }
