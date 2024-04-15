@@ -97,8 +97,8 @@ export class FlameLogger {
 
         // For each line in the job display, clear the line and move the cursor down
         for (let i = 0; i < this.jobDisplayLines + 1; i++) {
-            process.stdout.write('\x1b[2K')
             process.stdout.write('\x1b[1B')
+            process.stdout.write('\x1b[2K')
         }
 
         // Move the cursor back to the start of the job display
@@ -165,9 +165,9 @@ export class FlameLogger {
                     this.completeJob(jobId)
                     resolve(result)
                 } catch (error) {
-                    if (attemptNumber > this.retries) {
+                    if (attemptNumber >= this.retries) {
                         this.failJob(jobId)
-                        reject(error)
+                        throw error
                     } else {
                         const job = this.jobs[jobId];
                         this.logWarning(`Job ${job.title} failed attempt ${attemptNumber}: ${error}. Retrying after delay ...`)
@@ -196,7 +196,10 @@ export class FlameLogger {
             const color = this.colors[section.part] || 'white'
             return `${COLORS[color]}${section.message}`
         }).join(' ')
-        console.log(fullMessage)
+        process.stdout.write(fullMessage + '\n\n\n\n')
+        process.stdout.write('\x1b[1A')
+        process.stdout.write('\x1b[1A')
+        process.stdout.write('\x1b[1A')
     }
 
 }
