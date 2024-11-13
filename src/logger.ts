@@ -2,7 +2,7 @@ import { COLORS, COLOR_KEYS } from './colors';
 import { ActiveJob, ColorPallet, JobStatus, LogPart, LogSection } from './consts';
 import { timeSince } from './utils';
 
-export interface FlameLoggerProps {
+export interface LoggerProps {
     disabled?: boolean;
     clear?: boolean;
     pallet?: ColorPallet;
@@ -10,7 +10,7 @@ export interface FlameLoggerProps {
     baseRetryDelay?: number;
 }
 
-export class FlameLogger {
+export class Logger {
     // Logger tracks start time, and reports everything in relation to that time
     private start: Date = new Date();
 
@@ -31,7 +31,7 @@ export class FlameLogger {
     // If its disabled, we don't log anything
     private disabled = false;
 
-    public constructor(props: FlameLoggerProps = {}) {
+    public constructor(props: LoggerProps = {}) {
         this.colors = {
             ...COLOR_KEYS['default'],
             ...(props.pallet || {}),

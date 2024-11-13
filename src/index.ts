@@ -1,1 +1,1 @@
-export { FlameLogger } from './flame-logger';
+export { Logger } from './logger';
