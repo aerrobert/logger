@@ -42,6 +42,14 @@ export class Logger {
         if (props.clear) console.clear();
     }
 
+    public debug(message: string) {
+        return this._log(
+            this.start,
+            { part: LogPart.Message, message: 'debug' },
+            { part: LogPart.Debug, message }
+        );
+    }
+
     // Allow interfacing with logging in scopes, or directly
     public log(message: string) {
         return this._log(

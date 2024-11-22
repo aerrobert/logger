@@ -8,6 +8,7 @@ export enum LogPart {
     Complete = 'COMPLETE',
     Running = 'RUNNING',
     Waiting = 'WAITING',
+    Debug = 'DEBUG',
 }
 
 export type ColorPallet = Record<LogPart, string>;

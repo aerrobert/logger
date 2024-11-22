@@ -25,5 +25,6 @@ export const COLOR_KEYS: Record<string, ColorPallet> = {
         COMPLETE: 'green',
         RUNNING: 'magenta',
         WAITING: 'grey',
+        DEBUG: 'grey',
     },
 };
