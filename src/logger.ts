@@ -1,21 +1,20 @@
-import { COLORS, COLOR_KEYS } from './colors';
+import { COLORS, PALLET } from './colors';
 import { ActiveJob, ColorPallet, JobStatus, LogPart, LogSection } from './consts';
-import { timeSince } from './utils';
+import { timeSince, uuid } from './utils';
 
 export interface LoggerProps {
     disabled?: boolean;
     clear?: boolean;
-    pallet?: ColorPallet;
-    defaultRetries?: number;
-    baseRetryDelay?: number;
+    uuid?: boolean;
 }
 
 export class Logger {
     // Logger tracks start time, and reports everything in relation to that time
     private start: Date = new Date();
+    public readonly uuid: string = '';
 
     // A color pallet is used to color different parts of the log message, settable by the user
-    private colors: ColorPallet;
+    private colors: ColorPallet = PALLET;
 
     // We track active jobs, and display them in the console, this is the state for that
     private jobDisplayActive = false;
@@ -32,14 +31,9 @@ export class Logger {
     private disabled = false;
 
     public constructor(props: LoggerProps = {}) {
-        this.colors = {
-            ...COLOR_KEYS['default'],
-            ...(props.pallet || {}),
-        };
-        this.retries = props.defaultRetries || this.retries;
-        this.baseRetryDelay = props.baseRetryDelay || this.baseRetryDelay;
         this.disabled = props.disabled || this.disabled;
         if (props.clear) console.clear();
+        if (props.uuid) this.uuid = uuid();
     }
 
     public debug(message: string) {
@@ -234,11 +228,13 @@ export class Logger {
             part: LogPart.Time,
             message: timeSince(time),
         };
-        const allSections = [timeSection, ...parts];
+        const uuidSection = this.uuid.length ? { part: LogPart.Debug, message: this.uuid } : undefined;
+        const allSections = [timeSection, uuidSection, ...parts];
         let fullMessage = allSections
+            .filter(section => section)
             .map(section => {
-                const color = this.colors[section.part] || 'white';
-                return `${COLORS[color]}${section.message}`;
+                const color = this.colors[section!.part] || 'white';
+                return `${COLORS[color]}${section!.message}`;
             })
             .join(' ');
 

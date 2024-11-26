@@ -14,17 +14,15 @@ export const COLORS: Record<string, string> = {
     reset: '\x1b[0m',
 };
 
-export const COLOR_KEYS: Record<string, ColorPallet> = {
-    default: {
-        INFO: 'grey',
-        ERROR: 'red',
-        WARNING: 'orange',
-        FORMAT: 'grey',
-        TIME: 'grey',
-        MESSAGE: 'white',
-        COMPLETE: 'green',
-        RUNNING: 'magenta',
-        WAITING: 'grey',
-        DEBUG: 'grey',
-    },
+export const PALLET: ColorPallet = {
+    INFO: 'grey',
+    ERROR: 'red',
+    WARNING: 'orange',
+    FORMAT: 'grey',
+    TIME: 'grey',
+    MESSAGE: 'white',
+    COMPLETE: 'green',
+    RUNNING: 'magenta',
+    WAITING: 'grey',
+    DEBUG: 'grey',
 };
