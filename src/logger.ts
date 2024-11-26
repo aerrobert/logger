@@ -223,6 +223,11 @@ export class Logger {
 
     // For logging by colored message parts
 
+    // Function to remove color codes
+    private removeColorCodes(str: string): string {
+        return str.replace(/\x1b\[[0-9;]*m/g, '');
+    }
+
     private _log(time: Date, ...parts: LogSection[]) {
         if (this.disabled) return;
         const timeSection = {
@@ -230,15 +235,22 @@ export class Logger {
             message: timeSince(time),
         };
         const allSections = [timeSection, ...parts];
-        const fullMessage = allSections
+        let fullMessage = allSections
             .map(section => {
                 const color = this.colors[section.part] || 'white';
                 return `${COLORS[color]}${section.message}`;
             })
             .join(' ');
-        process.stdout.write(fullMessage + '\n\n\n\n');
-        process.stdout.write('\x1b[1A');
-        process.stdout.write('\x1b[1A');
-        process.stdout.write('\x1b[1A');
+
+        // Check for lambda environment variable and remove color codes if present
+        if (process.env.LAMBDA_TASK_ROOT) {
+            fullMessage = this.removeColorCodes(fullMessage);
+            console.log(fullMessage);
+        } else {
+            process.stdout.write(fullMessage + '\n\n\n\n');
+            process.stdout.write('\x1b[1A');
+            process.stdout.write('\x1b[1A');
+            process.stdout.write('\x1b[1A');
+        }
     }
 }
