@@ -1,9 +1,13 @@
 {
   "name": "@aerrobert/logger",
   "version": "0.0.2",
-  "main": "./src/index.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --outDir dist",
     "clean": "rm -rf ./lib/",
     "lint": "eslint ./src/ --fix",
     "test:watch": "jest --watch",
